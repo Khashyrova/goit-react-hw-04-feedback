@@ -6,31 +6,27 @@ import Section from './Section';
 import FeedbackOptions from './FeedbackOptions';
 
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-
+  const [form, setForm] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  });
   const countTotalFeedback = () => {
-    return good + neutral + bad;
+    return form.good + form.neutral + form.bad;
   };
   const total = countTotalFeedback();
   const countPositiveFeedbackPercentage = () => {
-    return Math.round((good / countTotalFeedback()) * 100);
+    return Math.round((form.good / countTotalFeedback()) * 100);
   };
   const positiveFeedbackPercentage = countPositiveFeedbackPercentage();
   const handleClick = e => {
     const { name } = e.target;
-    switch (name) {
-      case 'good':
-        setGood(good + 1);
-        break;
-      case 'neutral':
-        setNeutral(neutral + 1);
-        break;
-      case 'bad':
-        setBad(bad + 1);
-        break;
-    }
+    setForm(prevForm => {
+      return {
+        ...prevForm,
+        [name]: prevForm[name] + 1,
+      };
+    });
     countTotalFeedback();
     countPositiveFeedbackPercentage();
   };
@@ -44,9 +40,9 @@ const App = () => {
             <Notification message="There is no feedback" />
           ) : (
             <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
+              good={form.good}
+              neutral={form.neutral}
+              bad={form.bad}
               total={total}
               positiveFeedback={positiveFeedbackPercentage}
             />
