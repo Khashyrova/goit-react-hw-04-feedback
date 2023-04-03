@@ -29,6 +29,7 @@ export const StatisticsButton = styled.button`
   align-items: center;
   border: 1px solid #010101;
   border-radius: 5px;
+  cursor: pointer;
 `;
 export const StatisticsPreTitle = styled.h2`
   font-weight: 600;
